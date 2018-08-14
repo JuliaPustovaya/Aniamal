@@ -1,36 +1,44 @@
 public class TestClassEquals {
-	int a;
-	int d;
-	String bigA;
-	String bigD;
+	private int id;
+	private String firstName;
+	private String lastName;
+
+	public int getId() { return id; }
+	public void setId(int id) { this.id = id;}
+
+	public String getFirstName() { return firstName; }
+	public void setFirstName(String firstName) { this.firstName = firstName; }
+
+	public String getLastName() { return lastName; }
+	public void setLastName(String lastName) { this.lastName = lastName; }
 
 	@Override
-	public boolean equals(Object o) {
-		if (this == o) {
+	public boolean equals(Object obj) {
+		if (obj == this) {
 			return true;
 		}
-		if (o == null || getClass() != o.getClass()) {
+		if (obj == null || obj.getClass() != this.getClass()) {
 			return false;
 		}
-		TestClassEquals that = (TestClassEquals) o;
-		if (a != that.a) {
-			return false;
-		}
-		if (d != that.d) {
-			return false;
-		}
-		if (bigA != null ? !bigA.equals(that.bigA) : that.bigA != null) {
-			return false;
-		}
-		return bigD != null ? bigD.equals(that.bigD) : that.bigD == null;
+
+		TestClassEquals guest = (TestClassEquals) obj;
+		return id == guest.id
+				&& (firstName == guest.firstName
+				|| (firstName != null && firstName.equals(guest.getFirstName())))
+				&& (lastName == guest.lastName
+				|| (lastName != null && lastName .equals(guest.getLastName())));
 	}
 
 	@Override
 	public int hashCode() {
-		int result = a;
-		result = 31 * result + d;
-		result = 31 * result + (bigA != null ? bigA.hashCode() : 0);
-		result = 31 * result + (bigD != null ? bigD.hashCode() : 0);
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((firstName == null) ? 0 : firstName.hashCode());
+		result = prime * result + id;
+		result = prime * result
+				+ ((lastName == null) ? 0 : lastName.hashCode());
 		return result;
 	}
+
 }
